@@ -8118,6 +8118,7 @@
         1. Perform ? Call(_callback_, *undefined*, &laquo; _cell_.[[HeldValue]] &raquo;).
       1. Return NormalCompletion(*undefined*).
     </emu-alg>
+    <emu-note type="editor">When called from HostCleanupFinalizationRegistry, if calling the callback throws an error, this will be caught within the RunJobs algorithm and reported to the host. HTML does not apply the RunJobs algorithm, but will also <a href="https://html.spec.whatwg.org/#report-the-error">report the error</a>, which may call `window.onerror`.</emu-note>
   </emu-clause>
 </emu-clause>
 
@@ -36825,6 +36826,15 @@ THH:mm:ss.sss
     </emu-clause>
   </emu-clause>
 
+  <emu-note type="editor">
+    <p>
+      WeakMap and WeakSet keys are not kept alive just because a WeakRef points
+      to them. This proposal rephrases the definition of WeakMaps and WeakSets
+      to explain their observable effects on garbage collection, rather than
+      specifying operationally that non-live keys or members are deleted.
+    </p>
+  </emu-note>
+
   <emu-clause id="sec-weakmap-objects">
     <h1>WeakMap Objects</h1>
     <p>WeakMap objects are collections of key/value pairs where the keys are objects and values may be arbitrary ECMAScript language values. A WeakMap may be queried to see if it contains a key/value pair with a specific key, but no mechanism is provided for enumerating the objects it holds as keys. In certain conditions, objects which are not live are removed as WeakMap keys, as described in <emu-xref href="#sec-weakref-execution"></emu-xref>.</p>
@@ -38933,6 +38943,9 @@ THH:mm:ss.sss
       <p>The initial value of `WeakRef.prototype.constructor` is the intrinsic object %WeakRef%.</p>
 
       <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
+      <emu-note type="editor">
+        This section is to be treated identically to the "Annex B" of ECMA-262, but to be written in-line with the main specification.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-weak-ref.prototype.deref">
@@ -39145,6 +39158,12 @@ THH:mm:ss.sss
         1. Perform ? CleanupFinalizationRegistry(_finalizationRegistry_, _callback_).
         1. Return *undefined*.
       </emu-alg>
+      <emu-note type="editor">
+        This section is to be treated identically to the "Annex B" of ECMA-262, but to be written in-line with the main specification.
+      </emu-note>
+      <emu-note type="editor">
+        See <a href="https://github.com/whatwg/html/issues/5446">HTML issue #5446</a> for information about cleanupSome on browsers.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-finalization-registry.prototype-@@tostringtag">
